@@ -1,9 +1,15 @@
 import express from "express";
+type Quote = {
+  id: number;
+  content: string;
+  author: string;
+};
 
+const cors = require("cors");
 const app = express();
 const PORT = 4000;
 
-const quotes = [
+const quotes: Quote[] = [
   {
     id: 1,
     content: "To do or not to do!",
@@ -55,6 +61,12 @@ const quotes = [
     author: "Olaf Scholz"
   }
 ];
+
+app.use(
+  cors({
+    origin: "*"
+  })
+);
 
 app.get("/", function (req, res) {
   res.send("We are learning node js!");
