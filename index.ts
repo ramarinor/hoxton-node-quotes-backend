@@ -81,6 +81,16 @@ app.get("/random", function (req, res) {
   res.send(quotes[randomIndex]);
 });
 
+app.get("/quotes/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const match = quotes.find((quote) => quote.id === id);
+  if (match) {
+    res.send(match);
+  } else {
+    res.status(404).send({ error: "Quote not found." });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
