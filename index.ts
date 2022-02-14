@@ -147,7 +147,7 @@ app.post("/quotes", (req, res) => {
   if (typeof age !== "number" && age < 0) {
     errors.push("Age should be a number higher than 0!");
   }
-  if (image !== "string") {
+  if (typeof image !== "string") {
     errors.push("Image is missing or not a string");
   }
 
