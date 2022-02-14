@@ -132,6 +132,41 @@ app.get("/quotes/:id", (req, res) => {
   }
 });
 
+app.post("/quotes", (req, res) => {
+  const { content, firstName, lastName, age, image } = req.body;
+  const errors = [];
+  if (typeof content !== "string") {
+    errors.push("Content is missing or not a string");
+  }
+  if (typeof firstName !== "string") {
+    errors.push("First name is missing or not a string");
+  }
+  if (typeof lastName !== "string") {
+    errors.push("Last name is missing or not a string");
+  }
+  if (typeof age !== "number" && age < 0) {
+    errors.push("Age should be a number higher than 0!");
+  }
+  if (image !== "string") {
+    errors.push("Image is missing or not a string");
+  }
+
+  if (errors.length === 0) {
+    const newQuote: Quote = {
+      id: Math.random(),
+      content: content,
+      firstName: firstName,
+      lastName: lastName,
+      age: age,
+      image: image
+    };
+    quotes.unshift(newQuote);
+    res.status(201).send(newQuote);
+  } else {
+    res.status(400).send({ errors: errors });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
